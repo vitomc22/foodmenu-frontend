@@ -48,8 +48,10 @@ export function CreateModal({ closeModal }: ModalProps) {
   return (
     <div className="modal-overlay">
       <div className="modal-body">
-       <button onClick={closeModal} className="close">&times;</button>
-        <h2>Cadastre um novo item</h2>         
+        <button onClick={closeModal} className="close">
+          &times;
+        </button>
+        <h2>Cadastre um novo item</h2>
         <form className="input-container">
           <Input label="Title" value={title} updateValue={setTitle} />
           <Input label="Price" value={price} updateValue={setPrice} />
@@ -57,8 +59,8 @@ export function CreateModal({ closeModal }: ModalProps) {
         </form>
         <button onClick={submit} className="button-secondary">
           {isLoading ? "Loading..." : "Submit"}
-        </button>              
-      </div>      
+        </button>
+      </div>
     </div>
   );
 }
