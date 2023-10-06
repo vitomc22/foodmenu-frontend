@@ -13,7 +13,7 @@ function App() {
 
   return <div className="container">
     <h1>Cardápio</h1>
-    <div className="card-grid">
+    <div className="card-grid" onClick={handleOpenModal}>
       {data?.map(foodData =>
         <Card key={foodData.id}
           price={foodData.price}
@@ -23,7 +23,7 @@ function App() {
       )}      
     </div>
     {isModalOpen && <CreateModal closeModal={handleOpenModal} />}
-    <button onClick={handleOpenModal}>Novo</button>
+    <button onClick={handleOpenModal}>Novo</button>    
   </div>;
 }
 
