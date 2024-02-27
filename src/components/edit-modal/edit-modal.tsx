@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useFoodDataMutate } from "../../hooks/useFoodDataMutate";
+import { useFoodDataUpdate } from "../../hooks/useFoodDataMutate";
 import { FoodData } from "../../interface/foodData";
 
 import "./modal.css";
@@ -12,7 +12,12 @@ interface InputProps {
 
 interface ModalProps {
   closeModal(): void;
+  id?: number;
+  price: number;
+  name: string;
+  image: string;
 }
+
 
 const Input = ({ label, value, updateValue }: InputProps) => {
   return (
@@ -26,14 +31,17 @@ const Input = ({ label, value, updateValue }: InputProps) => {
   );
 };
 
-export function CreateModal({ closeModal }: ModalProps) {
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState(0);
-  const [image, setImage] = useState("");
-  const { mutate, isSuccess, isLoading } = useFoodDataMutate();
+export function EditModal(props: ModalProps) {
+  const id = props.id;
+  const [name, setName] = useState(props.name);
+  const [price, setPrice] = useState(props.price);
+  const [image, setImage] = useState(props.image);
+  const closeModal = props.closeModal;
+  const { mutate, isSuccess, isLoading } = useFoodDataUpdate();
 
   const submit = () => {
     const foodData: FoodData = {
+      id,
       name,
       price,
       image,
@@ -51,7 +59,7 @@ export function CreateModal({ closeModal }: ModalProps) {
         <button onClick={closeModal} className="close">
           &times;
         </button>
-        <h2>Cadastre um novo item</h2>
+        <h2>Editar Item: {props.id}</h2>
         <form className="input-container">
           <Input label="Name" value={name} updateValue={setName} />
           <Input label="Price" value={price} updateValue={setPrice} />
