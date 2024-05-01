@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { useFoodDataUpdate } from "../../hooks/useFoodDataMutate";
-import { FoodData } from "../../interface/foodData";
+import { deleteData, useFoodDataUpdate } from "../../hooks/useFoodDataMutate";
+import { FoodData } from '../../interface/foodData';
 
 import "./modal.css";
 
@@ -31,6 +31,7 @@ const Input = ({ label, value, updateValue }: InputProps) => {
   );
 };
 
+
 export function EditModal(props: ModalProps) {
   const id = props.id;
   const [name, setName] = useState(props.name);
@@ -38,6 +39,8 @@ export function EditModal(props: ModalProps) {
   const [image, setImage] = useState(props.image);
   const closeModal = props.closeModal;
   const { mutate, isSuccess, isLoading } = useFoodDataUpdate();
+
+
 
   const submit = () => {
     const foodData: FoodData = {
@@ -49,9 +52,21 @@ export function EditModal(props: ModalProps) {
     mutate(foodData);
   };
 
+  const remove = () => {
+    const foodData: FoodData = {
+      id,
+      name,
+      price,
+      image,
+    };
+    deleteData(foodData);
+    closeModal();
+  };
+
   useEffect(() => {
     closeModal();
   }, [isSuccess]);
+
 
   return (
     <div className="modal-overlay">
@@ -65,9 +80,15 @@ export function EditModal(props: ModalProps) {
           <Input label="Price" value={price} updateValue={setPrice} />
           <Input label="Image" value={image} updateValue={setImage} />
         </form>
-        <button onClick={submit} className="button-secondary">
-          {isLoading ? "Loading..." : "Submit"}
-        </button>
+        <div className="action-buttons">
+          <button onClick={submit} className="button-secondary">
+            {isLoading ? "Loading..." : "Submit"}
+          </button>
+          <button  onClick={remove} className="button-secondary">
+            {"Remove"}
+          </button>
+        </div>
+
       </div>
     </div>
   );

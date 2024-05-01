@@ -13,6 +13,11 @@ const putData = async (data: FoodData): AxiosPromise<any> => {
     return response;
 }
 
+export const deleteData = async (data: FoodData): AxiosPromise<any> => {
+    const response = axios.delete(API_URL + '/food/' + data.id);
+    return response;
+}
+
 export function useFoodDataMutate() {
     const queryClient = useQueryClient();
     const mutate = useMutation({
@@ -23,7 +28,7 @@ export function useFoodDataMutate() {
 
         }
     })
-    return mutate;    
+    return mutate;
 }
 
 export function useFoodDataUpdate() {
@@ -36,5 +41,19 @@ export function useFoodDataUpdate() {
 
         }
     })
-    return mutate;    
+    return mutate;
+}
+
+export function useFoodDataDelete() {
+    const mutate = useMutation({
+        mutationFn: deleteData,
+        onSuccess: () => {
+            alert("removido com sucesso!");
+        },
+        onError: () => {
+            alert("Algo deu errado..");
+        }
+
+    })
+    return mutate;
 }

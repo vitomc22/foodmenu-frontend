@@ -16,7 +16,7 @@
     background-color: rgb(132, 132, 209);
     color: white;
     font-weight: bold;
-    position: fixed;
+    position: relative;
     bottom: 16px;
     right: 24px;
     transition: all 0.1s linear 0.1s;
